@@ -13,4 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/login');
+Route::get('/', function () {
+    return response()->json([
+        'app' => 'KantinKu API',
+        'status' => 'running'
+    ]);
+});
