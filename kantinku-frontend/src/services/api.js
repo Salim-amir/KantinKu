@@ -1,5 +1,11 @@
 import axios from "axios";
 
+const API_URL = "https://kantinku-production.up.railway.app/api";
+
+fetch(`${API_URL}/products`)
+  .then(res => res.json())
+  .then(data => console.log(data));
+  
 const api = axios.create({
     baseURL: "/api",
     headers: {
