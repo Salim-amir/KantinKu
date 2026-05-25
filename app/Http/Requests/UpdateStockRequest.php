@@ -11,6 +11,16 @@ class UpdateStockRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->route('floorId') && $this->route('productId')) {
+            $this->merge([
+                'floor_id'   => $this->route('floorId'),
+                'product_id' => $this->route('productId'),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         return [
