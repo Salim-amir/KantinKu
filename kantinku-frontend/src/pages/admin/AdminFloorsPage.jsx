@@ -13,6 +13,7 @@ export default function AdminFloorsPage() {
   const [saving,   setSaving]   = useState(false)
   const [error,    setError]    = useState('')
   const [success,  setSuccess]  = useState('')
+  const [confirmDelete, setConfirmDelete] = useState(null)
 
   const loadFloors = () => {
     setLoading(true)
@@ -70,10 +71,18 @@ export default function AdminFloorsPage() {
     }
   }
 
-  const handleDelete = async (id) => {
-    if (!confirm('Hapus lantai ini? Semua produk di lantai ini juga akan terhapus dari lantai ini.')) return
-    await adminService.deleteFloor(id)
-    loadFloors()
+  const handleDelete = async () => {
+    if (!confirmDelete) return
+    try {
+      await adminService.deleteFloor(confirmDelete.id)
+      setSuccess('Lantai berhasil dihapus.')
+      loadFloors()
+      setTimeout(() => setSuccess(''), 3000)
+    } catch (err) {
+      setError('Gagal menghapus lantai.')
+    } finally {
+      setConfirmDelete(null)
+    }
   }
 
   if (loading) return (
@@ -151,6 +160,27 @@ export default function AdminFloorsPage() {
         </div>
       )}
 
+      {/* Confirmation Modal */}
+      {confirmDelete && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-lift w-full max-w-sm p-6 sm:p-7 animate-scale-in text-center">
+            <div className="w-14 h-14 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+            <h3 className="font-display font-bold text-lg text-zinc-800 mb-2">Hapus Lantai?</h3>
+            <p className="text-sm text-zinc-500 mb-6">
+              Apakah Anda yakin ingin menghapus <span className="font-bold text-zinc-700">{confirmDelete.name}</span>? Semua produk di lantai ini juga akan terhapus dari lantai ini.
+            </p>
+            <div className="flex gap-3">
+              <Button variant="secondary" onClick={() => setConfirmDelete(null)} className="flex-1">Batal</Button>
+              <Button onClick={handleDelete} className="flex-1 bg-red-500 hover:bg-red-600 border-transparent text-white">Hapus</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Table */}
       {floors.length === 0 ? (
         <EmptyState 
@@ -195,7 +225,7 @@ export default function AdminFloorsPage() {
                           className="text-xs text-blue-600 hover:text-blue-700 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-blue-50 transition-all duration-200">
                           Edit
                         </button>
-                        <button onClick={() => handleDelete(f.id)}
+                        <button onClick={() => setConfirmDelete(f)}
                           className="text-xs text-red-500 hover:text-red-600 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition-all duration-200">
                           Hapus
                         </button>
