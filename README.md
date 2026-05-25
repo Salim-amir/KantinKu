@@ -1,5 +1,5 @@
 # KantinKu 
-KantinKu adalah aplikasi web modern yang dirancang untuk mendigitalisasi sistem pemesanan makanan dan minuman di lingkungan kampus atau perkantoran yang memiliki beberapa lantai/kantin. Aplikasi ini memungkinkan pengguna (mahasiswa/karyawan) untuk memesan dari lantai tertentu, membayar via QRIS, dan mengambil pesanan tanpa antri panjang.
+KantinKu adalah aplikasi web yang dibuat untuk mempermudah proses pemesanan makanan dan minuman di lingkungan kampus atau perkantoran yang memiliki beberapa kantin atau lantai. Dengan aplikasi ini, pengguna bisa melihat menu, memesan makanan, melakukan pembayaran via QRIS, hingga mengambil pesanan tanpa perlu antre lama.
 
 ## 🚀 Fitur Utama
 
@@ -100,7 +100,7 @@ Aplikasi ini dipisahkan menjadi dua bagian utama (*Frontend* & *Backend*):
    ```bash
    npm run dev
    ```
-5. Buka `http://localhost:5173` di browser Anda.
+5. Buka `http://localhost:5173`.
 
 ## 👥 Kontributor
 - Dirancang & Dikembangkan secara *Pair-Programming* bersama Kelompok Berang-Berang.
